@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/* ============================================================
+   FUTURISTIC PORTFOLIO — DESIGN TOKENS (Tailwind v4 @theme)
+   ============================================================ */
+@theme {
+  --color-void: #04050d;
+  --color-base: #060814;
+  --color-panel: #0b0f1e;
+  --color-panel-2: #0f1428;
+
+  /* Aurora Blue palette (token names kept so all classes auto-update) */
+  --color-cyan: #4d7cff;      /* electric blue  — primary accent  */
+  --color-cyan-soft: #7ba0ff;
+  --color-violet: #6366f1;    /* indigo (bluer) — secondary accent */
+  --color-magenta: #22d3ee;   /* sky cyan       — tertiary accent  */
+  --color-lime: #34d399;      /* emerald        — status / 4th     */
+
+  --color-ink: #e8ecf4;
+  --color-muted: #8b93a7;
+  --color-faint: #565d70;
+
+  --font-display: "Orbitron", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --shadow-glow-cyan: 0 0 24px rgba(77, 124, 255, 0.35);
+  --shadow-glow-violet: 0 0 24px rgba(99, 102, 241, 0.4);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-cyan), var(--color-violet));
+  border-radius: 8px;
+}
+
+::selection {
+  background: rgba(77, 124, 255, 0.32);
+  color: #fff;
+}
+
+/* ============================================================
+   UTILITIES / EFFECTS
+   ============================================================ */
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+
+.text-gradient {
+  background: linear-gradient(120deg, #38bdf8 0%, #4d7cff 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(77, 124, 255, 0.45));
+}
+
+/* Neon glow helpers */
+.glow-cyan { filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.55)); }
+.text-glow { text-shadow: 0 0 14px rgba(77, 124, 255, 0.6); }
+
+.glass {
+  background: rgba(14, 16, 28, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 10px 34px rgba(0, 0, 0, 0.45);
+}
+
+.glass-hover {
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+.glass-hover:hover {
+  border-color: rgba(77, 124, 255, 0.6);
+  box-shadow:
+    0 0 42px rgba(77, 124, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px);
+}
+
+/* Grid backdrop */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(77, 124, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 124, 255, 0.09) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* Glow border on hover */
+.neon-border {
+  position: relative;
+  border: 1px solid rgba(77, 124, 255, 0.18);
+}
+
+/* Animated gradient text shimmer */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #38bdf8, #4d7cff, #6366f1, #38bdf8);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+  filter: drop-shadow(0 0 26px rgba(56, 189, 248, 0.55));
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.float { animation: float 6s ease-in-out infinite; }
+
+/* Pulse ring for status dot */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+.pulse-dot { animation: pulse-ring 2s infinite; }
+
+/* Reveal default state (GSAP toggles these) */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 28s linear infinite;
+}
+
+/* Glossy sheen sweep for buttons */
+@keyframes sheen {
+  0% { transform: translateX(-130%) skewX(-20deg); }
+  60%, 100% { transform: translateX(260%) skewX(-20deg); }
+}
+.btn-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: sheen 3.5s ease-in-out infinite;
+}
+
+/* Scanline flicker for terminal feel */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, .float, .shimmer, .marquee-track, .pulse-dot {
+    animation: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
